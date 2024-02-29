@@ -2,13 +2,11 @@ import Button from "../../components/Button";
 import Logo from "../../components/Logo";
 import AuthSwiper from "./AuthSwiper";
 import { useForm } from "react-hook-form"
-import {zodResolver} from "@hookform/resolvers/zod"
-import { authValidationSchema } from "./authenticationForm.validation";
 import cn from "../../utils/cn";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
-// import image from "../../assets/images/signUp.jpg"
+
 
 const SignIn = () => {
 
@@ -19,68 +17,83 @@ const SignIn = () => {
 
   const {
     register,
-    handleSubmit,
-    formState: {errors}
-  } = useForm({
-    resolver: zodResolver(authValidationSchema)
-  })
+    handleSubmit
+  } = useForm()
 
 
   const onsubmit = (data) =>{
 
-    axios.post("http://localhost:5000/api/v1/user/create-user", {
-        name: data.name,
-        userName: data.username,
-        email:data.email,
-        password: data.password
-    })
-    .then(res =>{
+          axios.get(`http://localhost:5000/api/v1/user/get-a-user?nameOrEmail=${data.id}`)
+          .then(res =>{
 
-        if(res.data.success === true){
+                const user = res.data;
 
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            }
-          });
-          Toast.fire({
-            icon: "success",
-            title: "SigUp successfully"
-          });
+                console.log(res);
 
-          console.log(res);
+                if(user.success === true){
+                       
+                    if(data.password !== user.data.password ){
+                      const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                          toast.onmouseenter = Swal.stopTimer;
+                          toast.onmouseleave = Swal.resumeTimer;
+                        }
+                      });
+                      Toast.fire({
+                        icon: "error",
+                        title: "wrong password"
+                      });
+                    }else{
+                      const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                          toast.onmouseenter = Swal.stopTimer;
+                          toast.onmouseleave = Swal.resumeTimer;
+                        }
+                      });
+                      Toast.fire({
+                        icon: "success",
+                        title: "Signed in successfully"
+                      });
 
-          navigate(`/main/${res.data.data._id}`)
-         
-        }else{
+                      navigate(`/main/${user.data._id}`)
 
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            }
-          });
-          Toast.fire({
-            icon: "error",
-            title: `${res.data.message}`
-          });
-            
-        }
+                      
+                    }
+
+
+                }else{
+                  const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.onmouseenter = Swal.stopTimer;
+                      toast.onmouseleave = Swal.resumeTimer;
+                    }
+                  });
+                  Toast.fire({
+                    icon: "error",
+                    title: `${user.message}  `
+                  });
+                }
+
+          })
        
        
 
-    })
+   
   }
 
 
@@ -103,12 +116,9 @@ const SignIn = () => {
                 id="username"
                 name="username"
                 className="mt-1 p-2 block w-full rounded border-gray-300 bg-slate-200  shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-                {...register("username", {required: true})}
+                {...register("id", {required: true})}
               />
 
-{
-                errors.username && ( <p className=" mt-1 text-red-600">{errors.username.message}</p>)
-              }
 
             </div>
 
@@ -124,13 +134,11 @@ const SignIn = () => {
                 {...register("password", {required: true})}
               />
 
-              {
-                errors.password && ( <p className=" mt-1 text-red-600">{errors.password.message}</p>)
-              } 
+           
             </div>
 
             <div className="flex justify-end mb-2">
-                    <p>Already have an account? please <Link className="text-blue-800" to="/">Login</Link></p>
+                    <p>New at Adevnture Atlas? please <Link className="text-blue-800" to="/signUp">SignUp</Link></p>
             </div>
             <Button>Login</Button>
           </form>
