@@ -49,6 +49,9 @@ const SignIn = () => {
                         title: "wrong password"
                       });
                     }else{
+
+                      localStorage.setItem("adventure-atlas", res.data.data._id)
+
                       const Toast = Swal.mixin({
                         toast: true,
                         position: "top-end",
@@ -65,7 +68,7 @@ const SignIn = () => {
                         title: "Signed in successfully"
                       });
 
-                      navigate(`/main/${user.data._id}`)
+                      navigate(`/main/create-service`)
 
                       
                     }
@@ -98,10 +101,10 @@ const SignIn = () => {
 
 
   return (
-    <div className={cn("flex justify-center items-center bg-cyan-700 bg-opacity-80 h-screen  w-full mx-auto ")}>
+    <div className={cn("flex justify-center items-center bg-gradient-to-r from-cyan-500 to-cyan-900  bg-opacity-80 h-screen  w-full mx-auto ")}>
       <div className="grid lg:grid-cols-12 items-center grid-cols-1 w-full max-w-7xl mx-auto p-2">
         <div className=" w-full max-w-xl p-3 rounded lg:col-span-6 main-font">
-          <Logo />
+          <Logo className="text-4xl" />
 
           <h1 className="text-black font-bold text-2xl mt-10 mb-2">Login</h1>
           <p className="text-black mb-3">Login to access your Golobe account</p>
@@ -140,7 +143,7 @@ const SignIn = () => {
             <div className="flex justify-end mb-2">
                     <p>New at Adevnture Atlas? please <Link className="text-blue-800" to="/signUp">SignUp</Link></p>
             </div>
-            <Button>Login</Button>
+            <Button type="submit">Login</Button>
           </form>
         </div>
 

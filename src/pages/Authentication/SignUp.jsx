@@ -39,6 +39,9 @@ const SignUp = () => {
 
         if(res.data.success === true){
 
+
+          localStorage.setItem("adventure-atlas", res.data.data._id)
+
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -57,7 +60,7 @@ const SignUp = () => {
 
           console.log(res);
 
-          navigate(`/main/${res.data.data._id}`)
+          navigate(`/main/create-service`)
          
         }else{
 
@@ -86,13 +89,13 @@ const SignUp = () => {
 
 
   return (
-    <div className={cn("flex justify-center items-center bg-cyan-700 bg-opacity-80 h-screen  w-full mx-auto md:p-3",
+    <div className={cn("flex justify-center items-center bg-gradient-to-r from-cyan-500 to-cyan-900 bg-opacity-80 h-screen  w-full mx-auto md:p-3",
     {
         "h-full" : errors
     })}>
       <div className="grid lg:grid-cols-12 items-center grid-cols-1 w-full max-w-7xl mx-auto p-2">
         <div className=" w-full max-w-xl p-3 rounded lg:col-span-6 main-font">
-          <Logo />
+          <Logo className="text-4xl" />
 
           <h1 className="text-black font-bold text-2xl mt-10 mb-2">Login</h1>
           <p className="text-black mb-3">Login to access your Golobe account</p>
@@ -170,7 +173,7 @@ const SignUp = () => {
             <div className="flex justify-end mb-2">
                     <p>Already have an account? please <Link className="text-blue-800" to="/">Login</Link></p>
             </div>
-            <Button>Login</Button>
+            <Button type="submit">Login</Button>
           </form>
         </div>
 

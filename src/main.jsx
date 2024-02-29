@@ -4,8 +4,18 @@ import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import route from './routes/route.jsx'
 
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+
+const queryClient = new QueryClient()
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-   <RouterProvider router={route}/>
+     <QueryClientProvider client={queryClient}>
+        <RouterProvider router={route}/>
+   </QueryClientProvider>
   </React.StrictMode>,
 )
