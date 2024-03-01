@@ -26,7 +26,7 @@ const SignIn = () => {
           axios.get(`http://localhost:5000/api/v1/user/get-a-user?nameOrEmail=${data.id}`)
           .then(res =>{
 
-                const user = res.data;
+                const user = res?.data;
 
                 console.log(res);
 
@@ -50,7 +50,7 @@ const SignIn = () => {
                       });
                     }else{
 
-                      localStorage.setItem("adventure-atlas", res.data.data._id)
+                      localStorage.setItem("adventure-atlas", res.data.data?._id)
 
                       const Toast = Swal.mixin({
                         toast: true,

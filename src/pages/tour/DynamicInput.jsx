@@ -11,7 +11,7 @@ const DynamicInput = () => {
   const [userAllTour]=useTour();
   const [allUsers] = useAllUsers();
 
-  const initialTourId = userAllTour?.[0]._id;
+  const initialTourId = userAllTour?.[0]?._id;
 
   console.log(initialTourId);
 
@@ -20,7 +20,7 @@ const DynamicInput = () => {
   console.log(tourId);
 
 
-  const initialMembers = allUsers?.[0]?.userName
+  const initialMembers = allUsers?.[0]?._id
 
   console.log(allUsers);
 
@@ -107,13 +107,16 @@ const DynamicInput = () => {
 
              <select onChange={(e)=>setTourId(e.target.value)} className="p-2 text-lg border rounded-md border-gray-300">
 
-                      {userAllTour?.map(t => <option key={t._id} value={t?._id}>{t?.tourName}</option>)}
+                    {
+                       userAllTour?.length > 0 ?  userAllTour?.map(t => <option key={t._id} value={t?._id}>{t?.tourName}</option>) : <option>No tour Available</option>
+                    }
 
                 </select>
       </div>
+      <p className='text-start'>Add Member</p>
       {inputs.map((input, index) => (
         <div key={index} className="mb-4  space-y-2 flex flex-col">
-          <p className='text-start'>Add Member</p>
+          
           <select
             name="select"
             value={input.membersInfo}

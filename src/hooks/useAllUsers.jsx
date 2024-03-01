@@ -16,7 +16,7 @@ const useAllUsers = () => {
         }
      )
 
-     const allUsers = data?.filter(u => u._id !== adminId)
+     const allUsers = data?.filter(u => u?._id !== adminId)
 
      return [allUsers]
 };

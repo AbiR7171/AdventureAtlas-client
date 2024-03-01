@@ -31,7 +31,13 @@ const CreateTour = () => {
             price: data?.price,
             startDate: data?.startDate,
             endDate: data?.endDate,
-            admin:userData._id
+            admin:userData._id,
+            members:[
+               {
+                membersInfo: userData?._id,
+                initial:"0"
+               }
+            ]
 
             
         })

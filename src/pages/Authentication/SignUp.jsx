@@ -40,7 +40,7 @@ const SignUp = () => {
         if(res.data.success === true){
 
 
-          localStorage.setItem("adventure-atlas", res.data.data._id)
+          localStorage.setItem("adventure-atlas", res.data.data?._id)
 
           const Toast = Swal.mixin({
             toast: true,

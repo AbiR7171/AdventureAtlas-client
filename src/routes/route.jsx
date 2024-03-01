@@ -4,6 +4,7 @@ import SignUp from "../pages/Authentication/SignUp";
 import DashBoardLayout from "../layouts/DashBoardLayout";
 import CreateTour from "../pages/tour/CreateTour";
 import AddTourMembers from "../pages/tour/AddTourMembers";
+import TourDashboard from "../pages/tour/TourDashboard";
 
 const route = createBrowserRouter([
      {
@@ -25,6 +26,10 @@ const route = createBrowserRouter([
          {
            path: "/main/add-members",
            element:<AddTourMembers/>
+         },
+         {
+            path:"/main/dashboard",
+            element: <TourDashboard/>
          }
        ]
      }

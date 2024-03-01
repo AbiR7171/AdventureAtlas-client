@@ -12,6 +12,14 @@ const SideBar = () => {
             <Logo className="text-3xl"/>
 
             <nav className="main-font mt-5 space-y-2">
+            <NavLink to="/main/dashboard"
+                 className={({isActive})=>cn("flex items-center justify-center gap-2 border-0 bg-gray-200 text-black p-2 rounded hover:bg-gray-300 transition-all ",
+                 {
+                     "bg-gray-300 ": isActive
+                 }
+                 )}
+                > <Icon icon="ic:baseline-dashboard" className="text-xl" /><span className="truncate">Dashboard</span></NavLink>
+
             <NavLink to="/main/create-tour"
                  className={({isActive})=>cn("flex items-center justify-center gap-2 border-0 bg-gray-200 text-black p-2 rounded hover:bg-gray-300 transition-all ",
                  {
