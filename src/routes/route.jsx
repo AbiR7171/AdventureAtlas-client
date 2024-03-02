@@ -7,6 +7,8 @@ import AddTourMembers from "../pages/tour/AddTourMembers";
 import TourDashboard from "../pages/tour/TourDashboard";
 import SingleTourData from "../pages/tour/SingleTourData";
 import EditTourData from "../pages/tour/EditTourData";
+import ExpenseHistory from "../pages/tour/ExpenseHistory";
+import PrivateRoute from "./PrivateRoute";
 
 const route = createBrowserRouter([
   {
@@ -19,23 +21,23 @@ const route = createBrowserRouter([
   },
   {
     path: "/main",
-    element: <DashBoardLayout />,
+    element: <PrivateRoute><DashBoardLayout /></PrivateRoute>,
     children: [
       {
         path: "/main/create-tour",
-        element: <CreateTour />,
+        element: <PrivateRoute><CreateTour /></PrivateRoute>,
       },
       {
         path: "/main/add-members",
-        element: <AddTourMembers />,
+        element: <PrivateRoute><AddTourMembers /></PrivateRoute>,
       },
       {
         path: "/main/dashboard",
-        element: <TourDashboard />,
+        element:<PrivateRoute> <TourDashboard /></PrivateRoute>,
       },
       {
         path: "/main/single-tour/:id",
-        element: <SingleTourData />,
+        element: <PrivateRoute><SingleTourData /></PrivateRoute>,
         loader: ({ params }) =>
           fetch(
             `https://adventure-atlas-server.vercel.app/api/v1/tour/a-tour/${params.id}`
@@ -43,12 +45,21 @@ const route = createBrowserRouter([
       },
       {
         path: "/main/edit-tour/:id",
-        element: <EditTourData />,
+        element: <PrivateRoute><EditTourData /></PrivateRoute>,
         loader: ({ params }) =>
           fetch(
             `https://adventure-atlas-server.vercel.app/api/v1/tour/a-tour/${params.id}`
           ),
       },
+      {
+        path:"/main/expense-history/:id",
+        element:<PrivateRoute><ExpenseHistory/></PrivateRoute>,
+        loader: ({ params }) =>
+          fetch(
+            `https://adventure-atlas-server.vercel.app/api/v1/tour/a-tour/${params.id}`
+          ),
+
+      }
     ],
   },
 ]);

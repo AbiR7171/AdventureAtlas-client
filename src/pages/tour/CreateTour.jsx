@@ -1,8 +1,6 @@
 import Button from "../../components/Button";
 import SectionTitels from "../../components/SectionTitels";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import tourValidationSchema from "./tour.validation";
 import axios from "axios";
 import useUser from "../../hooks/useUser";
 import Swal from "sweetalert2";
@@ -10,18 +8,21 @@ import Swal from "sweetalert2";
 const CreateTour = () => {
   const [userData] = useUser();
 
-  console.log(userData);
-
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(tourValidationSchema),
-  });
+  } = useForm();
 
   const onsubmit = (data) => {
+    console.log(data);
+    console.log(data.image[0]);
+
+    const formData = new FormData();
+    formData.append("image", data.image[0]);
+
+    console.log(formData);
     axios
       .post(
         "https://adventure-atlas-server.vercel.app/api/v1/tour/create-tour",
@@ -42,6 +43,19 @@ const CreateTour = () => {
       .then((res) => {
         console.log(res);
         if (res.data.success === true) {
+          axios
+            .put(
+              `https://adventure-atlas-server.vercel.app/api/v1/tour/upload-image/${res?.data?.data?._id}`,
+              formData,
+              {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+              }
+            )
+            .then((res) => {
+              console.log(res);
+            });
           reset();
           const Toast = Swal.mixin({
             toast: true,
@@ -80,13 +94,13 @@ const CreateTour = () => {
   };
 
   return (
-    <div className="bg-white w-full h-full bg-opacity-50 flex flex-col justify-center items-center">
+    <div className=" w-full h-full  flex flex-col justify-center items-center ">
       <SectionTitels titel="Create Tour" icon="ic:sharp-create-new-folder" />
 
-      <div className="w-full max-w-4xl ">
+      <div className="w-full max-w-xl mt-2 ">
         <form
           onSubmit={handleSubmit(onsubmit)}
-          className="shadow-2xl rounded px-8 pt-6 pb-8 mb-4"
+          className=" shadow-md rounded px-8 pt-6 pb-8 mb-4"
         >
           <div className="mb-4">
             <label
@@ -125,6 +139,20 @@ const CreateTour = () => {
               <p className="text-red-600 mt-1">{errors.price.message}</p>
             )}
           </div>
+          <div className=" w-full my-4">
+            <label className="label block text-gray-700 text-sm font-bold mb-2">
+              <span className="label-text">Tour Image</span>
+            </label>
+            <input
+              type="file"
+              {...register("image")}
+              className="file-input file-input-bordered w-full "
+            />
+
+            {errors.image && (
+              <p className="text-red-600 mt-1">{errors.image.message}</p>
+            )}
+          </div>
           <div className="mb-4">
             <label
               htmlFor="startDate"
@@ -160,7 +188,9 @@ const CreateTour = () => {
             )}
           </div>
           <div className="w-full">
-            <Button className="w-full">Create</Button>
+            <Button type="submit" className="w-full">
+              Create
+            </Button>
           </div>
         </form>
       </div>

@@ -143,12 +143,12 @@ const DynamicInput = () => {
   }
 
   return (
-   <div>
-      <div className=" p-4 space-y-2 main-font w-6/12 mx-auto">
+   <div className='space-y-3'>
+      <div className=" p-4  main-font w-6/12 mx-auto space-y-4">
       <div>
-            <p>Select Tour</p>
+            <p className='mb-2'>Select Tour</p>
 
-             <select onChange={(e)=>setTourId(e.target.value)} className="p-2 text-lg border rounded-md border-gray-300">
+             <select onChange={(e)=>setTourId(e.target.value)} className="p-2 text-lg w-9/12 border rounded-md border-gray-300">
 
                     {
                        userAllTour?.length > 0 ?  userAllTour?.map(t => <option key={t._id} value={t?._id}>{t?.tourName}</option>) : <option>No tour Available</option>
@@ -164,7 +164,7 @@ const DynamicInput = () => {
             name="select"
             value={input.membersInfo}
             onChange={(event) => handleChange(index, event)}
-            className="p-2 text-lg border rounded-md border-gray-300 mr-2"
+            className="p-2 text-lg border rounded-md border-gray-300 mr-2 w-9/12"
           > 
              <option selected>Select Members</option>
             {allUsers?.map(u => <option key={u._id} value={u?._id}>{u?.userName}</option>)}
@@ -185,7 +185,7 @@ const DynamicInput = () => {
           <button
             type="button"
             onClick={() => handleRemoveInput(index)}
-            className=" text-white font-bold py-2 px-4 rounded"
+            className=""
           >
             <Icon icon="system-uicons:cross-circle" className='text-3xl text-red-700 ' />
           </button>
@@ -195,13 +195,13 @@ const DynamicInput = () => {
       <button
         type="button"
         onClick={handleAddInput}
-        className=" font-bold py-2 px-4 rounded"
+        className=""
       >
         <Icon icon="icons8:plus" className='text-4xl text-blue-800' />
       </button>
      
        <div onClick={handleSubmit}>
-             <Button >Submit</Button>
+             <Button className="w-9/12">Submit</Button>
        </div>
     </div>
 

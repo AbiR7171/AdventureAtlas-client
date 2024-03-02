@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import Modal from "../../components/Modal";
 import { useEffect, useState } from "react";
 
+
 const SingleTourData = () => {
   const { data } = useLoaderData();
   console.log(data);
@@ -23,7 +24,7 @@ const SingleTourData = () => {
       setPerHeadCost(perCost);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [perHeadCost]);
+  }, [data]);
 
   console.log(data);
 
@@ -77,14 +78,14 @@ const SingleTourData = () => {
 
         <div className="space-y-3">
           <Link to={`/main/edit-tour/${data?._id}`}>
-            <button className="bg-blue-700 text-white p-2 px-6 flex items-center gap-2">
+            <button className="bg-blue-500 text-white p-2 px-6 flex items-center gap-2">
               Edit <Icon icon="bxs:edit" className="text-2xl" />
             </button>
           </Link>
 
           <button
             onClick={() => handleDeleteTour(data?._id)}
-            className="bg-red-700 text-white w-full p-2  flex items-center justify-center gap-2"
+            className="bg-red-500 text-white w-full p-2  flex items-center justify-center gap-2"
           >
             Delete <Icon icon="ic:baseline-delete" className="text-2xl" />
           </button>
@@ -93,14 +94,24 @@ const SingleTourData = () => {
 
       <p className="mt-10 text-2xl text-center  underline">Members</p>
 
-      <div className="flex justify-end max-w-5xl">
+    <div className="flex gap-2 justify-end  max-w-5xl">
+    <div className="flex justify-end max-w-5xl">
         <button
-          className="btn bg-blue-700 text-white"
+          className="btn bg-blue-500 text-white p-2 flex items-center gap-2"
           onClick={() => setOpenModal(true)}
         >
           Add Expense <Icon icon="zondicons:add-solid" />
         </button>
       </div>
+      
+      <div className="flex justify-end max-w-5xl">
+      <Link to={`/main/expense-history/${data?._id}`}>
+      <button className="btn bg-purple-500 text-white">  Expense History <Icon icon="ic:baseline-history" /></button>
+      </Link>
+         
+        
+      </div>
+    </div>
 
       <div className="grid grid-cols-3 gap-3">
         {data?.members?.map((m) => (
@@ -109,6 +120,7 @@ const SingleTourData = () => {
       </div>
 
       <Modal data={data} openModal={openModal} setOpenModal={setOpenModal} />
+      
     </div>
   );
 };

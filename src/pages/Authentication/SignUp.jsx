@@ -1,4 +1,4 @@
-import Button from "../../components/Button";
+
 import Logo from "../../components/Logo";
 import AuthSwiper from "./AuthSwiper";
 import "./auth.css";
@@ -9,7 +9,7 @@ import cn from "../../utils/cn";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
-// import image from "../../assets/images/signUp.jpg"
+
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -18,9 +18,16 @@ const SignUp = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch
   } = useForm({
     resolver: zodResolver(authValidationSchema),
   });
+
+
+  const [name, userName, email, password] =watch(["name", "username", "email", "password"]);
+
+  const isFormEmpty = !name || !userName || !email ||!password;
+
 
   const onsubmit = (data) => {
     axios
@@ -85,28 +92,29 @@ const SignUp = () => {
         }
       )}
     >
-      <Logo className="text-4xl" />
+      <Logo className="text-4xl" color={true}/>
       <div className="grid lg:grid-cols-12 items-center grid-cols-1 w-full max-w-7xl mx-auto p-2">
         <div className=" w-full max-w-xl p-3 rounded lg:col-span-6 main-font">
           <div>
             <h1 className="text-black font-bold text-2xl mt-10 mb-2 text-center">
-              Login
+              SignUp
             </h1>
             <p className="text-black mb-3 text-center">
-              Login to access your Golobe account
+              SignUp to access your Golobe account
             </p>
           </div>
 
           <form onSubmit={handleSubmit(onsubmit)}>
             <div className="mb-4">
-              <label htmlFor="name" className="block text-gray-700">
+              <label htmlFor="name" className="block text-gray-700 ">
                 Name:
               </label>
               <input
                 type="text"
                 id="name"
                 name="name"
-                className="mt-1 p-2 block w-full rounded border-gray-300 bg-slate-200 text-black shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                placeholder="Enter Name"
+                className= " input-border mt-1 p-2 block w-full rounded border-gray-300 bg-slate-200 text-black shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                 {...register("name", { required: true })}
               />
 
@@ -122,7 +130,9 @@ const SignUp = () => {
                 type="text"
                 id="username"
                 name="username"
-                className="mt-1 p-2 block w-full rounded border-gray-300 bg-slate-200  shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                autoComplete="new-username"
+                placeholder="Enter user name"
+                className="input-border mt-1 p-2 block w-full rounded border-gray-300 bg-slate-200  shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                 {...register("username", { required: true })}
               />
 
@@ -139,7 +149,9 @@ const SignUp = () => {
                 type="email"
                 id="username"
                 name="username"
-                className="mt-1 p-2 block w-full rounded border-gray-300 bg-slate-200  shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                placeholder="Enter Email"
+                
+                className="input-border mt-1 p-2 block w-full rounded border-gray-300 bg-slate-200  shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                 {...register("email", { required: true })}
               />
 
@@ -156,7 +168,9 @@ const SignUp = () => {
                 type="password"
                 id="password"
                 name="password"
-                className="mt-1 p-2 block w-full rounded border-gray-300 bg-slate-200 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                autoComplete="new-password"
+                placeholder="Enter password"
+                className="input-border mt-1 p-2 block w-full rounded border-gray-300 bg-slate-200 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                 {...register("password", { required: true })}
               />
 
@@ -165,7 +179,11 @@ const SignUp = () => {
               )}
             </div>
 
-            <Button type="submit">Login</Button>
+            <button type="submit" disabled={isFormEmpty}  className={cn("w-full bg-[#BE31D3]  py-3 text-white", 
+          {
+            "bg-opacity-10":isFormEmpty
+          })}>Submit</button>
+          
           </form>
 
           <div className="flex justify-center items-center mt-3">
