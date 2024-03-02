@@ -7,7 +7,7 @@ import cn from "../utils/cn";
 const SideBar = () => {
 
     return (
-        <div className="h-screen bg-gradient-to-r from-cyan-500 to-cyan-900 p-2 overflow-auto sticky left-0 top-0">
+        <div className="h-screen border p-2 overflow-auto sticky left-0 top-0">
 
             <Logo className="text-3xl"/>
 

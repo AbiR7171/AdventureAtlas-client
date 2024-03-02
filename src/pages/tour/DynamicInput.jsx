@@ -57,46 +57,89 @@ const DynamicInput = () => {
 
     console.log("yes");
                 
-         axios.put(`http://localhost:5000/api/v1/tour/add-members?tourId=${tourId}`, {
-          members: inputs
-         })
-         .then(res =>{
-                console.log(res)
-
-                if(res.data.success === true){
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                      toast.onmouseenter = Swal.stopTimer;
-                      toast.onmouseleave = Swal.resumeTimer;
-                    }
-                  });
-                  Toast.fire({
-                    icon: "success",
-                    title: "Members added successfully"
-                  });
-                }else{
-                  const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                      toast.onmouseenter = Swal.stopTimer;
-                      toast.onmouseleave = Swal.resumeTimer;
-                    }
-                  });
-                  Toast.fire({
-                    icon: "error",
-                    title: "Something went wrong"
-                  });
-                }
-         })
+         if(tourId === undefined){
+          axios.put(`https://adventure-atlas-server.vercel.app/api/v1/tour/add-members?tourId=${initialTourId}`, {
+            members: inputs
+           })
+           .then(res =>{
+                  console.log(res)
+  
+                  if(res.data.success === true){
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "success",
+                      title: "Members added successfully"
+                    });
+                  }else{
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "error",
+                      title: "Something went wrong"
+                    });
+                  }
+           })
+         }else{
+          axios.put(`https://adventure-atlas-server.vercel.app/api/v1/tour/add-members?tourId=${tourId}`, {
+            members: inputs
+           })
+           .then(res =>{
+                  console.log(res)
+  
+                  if(res.data.success === true){
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "success",
+                      title: "Members added successfully"
+                    });
+                  }else{
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                      }
+                    });
+                    Toast.fire({
+                      icon: "error",
+                      title: "Something went wrong"
+                    });
+                  }
+           })
+         }
   }
 
   return (
@@ -122,7 +165,8 @@ const DynamicInput = () => {
             value={input.membersInfo}
             onChange={(event) => handleChange(index, event)}
             className="p-2 text-lg border rounded-md border-gray-300 mr-2"
-          >
+          > 
+             <option selected>Select Members</option>
             {allUsers?.map(u => <option key={u._id} value={u?._id}>{u?.userName}</option>)}
             
           </select>

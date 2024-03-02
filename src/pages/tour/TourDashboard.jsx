@@ -5,7 +5,7 @@ import useTour from "../../hooks/useTour";
 const TourDashboard = () => {
 
 
-    const [userAllTour]=useTour();
+    const [userAllTour, refetch]=useTour();
     console.log(userAllTour);
    
     const activeTour =  userAllTour?.filter(t => t.members.length > 1);
@@ -20,7 +20,7 @@ const TourDashboard = () => {
          <div className="grid grid-cols-3 gap-2">
                   
             {
-                activeTour?.map(t => <Card  key={t?._id} tour={t}/>)
+                activeTour?.map(t => <Card  key={t?._id} tour={t} refetch={refetch}/>)
             }
          </div>
             

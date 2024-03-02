@@ -9,7 +9,7 @@ const DashBoardLayout = () => {
                      <SideBar/>
             </div>
 
-            <div className="col-span-10 bg-gradient-to-r from-cyan-500 to-cyan-900">
+            <div className="col-span-10">
                 <Outlet/>
             </div>
 

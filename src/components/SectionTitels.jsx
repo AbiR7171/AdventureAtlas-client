@@ -4,8 +4,8 @@ import { Icon } from "@iconify-icon/react";
 
 const SectionTitels = ({titel, icon}) => {
     return (
-        <div className="flex flex-col justify-center items-center  relative pt-14 mb-5">
-            <p className="text-black text-4xl main-font absolute top-6 font-extrabold flex items-center gap-2">{titel} <span><Icon icon={icon} /></span>   </p>
+        <div className="flex flex-col justify-center items-center  pt-14 mb-5 ">
+            <p className="text-black text-4xl main-font font-extrabold flex items-center gap-2">{titel} <span><Icon icon={icon} /></span>   </p>
             <img src={vector} alt="" />
         </div>
     );
