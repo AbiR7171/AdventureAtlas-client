@@ -9,7 +9,7 @@ const DashBoardLayout = () => {
                      <SideBar/>
             </div>
 
-            <div className="col-span-10">
+            <div className="col-span-10 bg-white">
                 <Outlet/>
             </div>
 

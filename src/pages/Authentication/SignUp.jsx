@@ -1,4 +1,3 @@
-
 import Logo from "../../components/Logo";
 import AuthSwiper from "./AuthSwiper";
 import "./auth.css";
@@ -9,25 +8,49 @@ import cn from "../../utils/cn";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
-
+import { motion } from "framer-motion";
 
 const SignUp = () => {
   const navigate = useNavigate();
+
+  const intro = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        staggerChildren: 0.25,
+        delayChildren: 0.5,
+      },
+    },
+  };
+
+  const introChildren = {
+    hidden: { opacity: 0, y: -200 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, type: "spring", bounce: 0.5 },
+    },
+  };
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch
+    watch,
   } = useForm({
     resolver: zodResolver(authValidationSchema),
   });
 
+  const [name, userName, email, password] = watch([
+    "name",
+    "username",
+    "email",
+    "password",
+  ]);
 
-  const [name, userName, email, password] =watch(["name", "username", "email", "password"]);
-
-  const isFormEmpty = !name || !userName || !email ||!password;
-
+  const isFormEmpty = !name || !userName || !email || !password;
 
   const onsubmit = (data) => {
     axios
@@ -92,20 +115,31 @@ const SignUp = () => {
         }
       )}
     >
-      <Logo className="text-4xl" color={true}/>
-      <div className="grid lg:grid-cols-12 items-center grid-cols-1 w-full max-w-7xl mx-auto p-2">
-        <div className=" w-full max-w-xl p-3 rounded lg:col-span-6 main-font">
+      <Logo className="text-4xl" color={true} />
+      <div
+       
+        className="grid lg:grid-cols-12 items-center grid-cols-1 w-full max-w-7xl mx-auto p-2"
+      >
+        <motion.div  variants={intro}
+        initial="hidden"
+        animate="visible" className=" w-full max-w-xl p-3 rounded lg:col-span-6 main-font">
           <div>
-            <h1 className="text-black font-bold text-2xl mt-10 mb-2 text-center">
+            <motion.h1
+              variants={introChildren}
+              className="text-black font-bold text-2xl mt-10 mb-2 text-center"
+            >
               SignUp
-            </h1>
-            <p className="text-black mb-3 text-center">
+            </motion.h1>
+            <motion.p
+              variants={introChildren}
+              className="text-black mb-3 text-center"
+            >
               SignUp to access your Golobe account
-            </p>
+            </motion.p>
           </div>
 
           <form onSubmit={handleSubmit(onsubmit)}>
-            <div className="mb-4">
+            <motion.div variants={introChildren} className="mb-4">
               <label htmlFor="name" className="block text-gray-700 ">
                 Name:
               </label>
@@ -114,15 +148,15 @@ const SignUp = () => {
                 id="name"
                 name="name"
                 placeholder="Enter Name"
-                className= " input-border mt-1 p-2 block w-full rounded border-gray-300 bg-slate-200 text-black shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+                className=" input-border mt-1 p-2 block w-full rounded border-gray-300 bg-slate-200 text-black shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                 {...register("name", { required: true })}
               />
 
               {errors.name && (
                 <p className=" mt-1 text-red-600">{errors.name.message}</p>
               )}
-            </div>
-            <div className="mb-4">
+            </motion.div>
+            <motion.div variants={introChildren} className="mb-4">
               <label htmlFor="username" className="block text-gray-700">
                 Username:
               </label>
@@ -139,9 +173,9 @@ const SignUp = () => {
               {errors.username && (
                 <p className=" mt-1 text-red-600">{errors.username.message}</p>
               )}
-            </div>
+            </motion.div>
 
-            <div className="mb-4">
+            <motion.div variants={introChildren} className="mb-4">
               <label htmlFor="username" className="block text-gray-700">
                 Email:
               </label>
@@ -150,7 +184,6 @@ const SignUp = () => {
                 id="username"
                 name="username"
                 placeholder="Enter Email"
-                
                 className="input-border mt-1 p-2 block w-full rounded border-gray-300 bg-slate-200  shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
                 {...register("email", { required: true })}
               />
@@ -158,9 +191,9 @@ const SignUp = () => {
               {errors.email && (
                 <p className=" mt-1 text-red-600">{errors.email.message}</p>
               )}
-            </div>
+            </motion.div>
 
-            <div className="mb-4">
+            <motion.div variants={introChildren} className="mb-4">
               <label htmlFor="password" className="block text-gray-700">
                 Password:
               </label>
@@ -177,24 +210,29 @@ const SignUp = () => {
               {errors.password && (
                 <p className=" mt-1 text-red-600">{errors.password.message}</p>
               )}
-            </div>
+            </motion.div>
 
-            <button type="submit" disabled={isFormEmpty}  className={cn("w-full bg-[#BE31D3]  py-3 text-white", 
-          {
-            "bg-opacity-10":isFormEmpty
-          })}>Submit</button>
-          
+            <motion.button
+              variants={introChildren}
+              type="submit"
+              disabled={isFormEmpty}
+              className={cn("w-full bg-[#BE31D3]  py-3 text-white", {
+                "bg-opacity-40": isFormEmpty,
+              })}
+            >
+              Submit
+            </motion.button>
           </form>
 
-          <div className="flex justify-center items-center mt-3">
+          <motion.div variants={introChildren} className="flex justify-center items-center mt-3">
             <p>
               Already have an account? please{" "}
               <Link className="text-blue-800" to="/">
                 Login
               </Link>
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         <div className="lg:col-span-5">
           <AuthSwiper />

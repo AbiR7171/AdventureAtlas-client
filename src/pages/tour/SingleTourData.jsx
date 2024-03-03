@@ -5,7 +5,7 @@ import { Icon } from "@iconify-icon/react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Modal from "../../components/Modal";
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 
 
 const SingleTourData = () => {
@@ -13,18 +13,25 @@ const SingleTourData = () => {
   console.log(data);
   const navigate = useNavigate();
   const [openModal, setOpenModal] = useState(false);
-  const [perHeadCost, setPerHeadCost] = useState(0);
+  const [totalInitail, setTotalInitial]=useState(0)
 
-  useEffect(() => {
-    let sum = 0;
-    data?.expense?.forEach((e) => {
-      sum += e.cost;
-      const perCost = sum / data?.members?.length;
-      console.log(perCost);
-      setPerHeadCost(perCost);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+
+   useEffect(()=>{
+
+    let initial = 0
+           
+         data?.members?.forEach( i =>{
+              initial += parseInt(i?.initial);
+              console.log(initial);
+              setTotalInitial(initial)
+         })
+          
+   },[data])
+
+   console.log(totalInitail);
+
+
+
 
   console.log(data);
 
@@ -106,7 +113,7 @@ const SingleTourData = () => {
       
       <div className="flex justify-end max-w-5xl">
       <Link to={`/main/expense-history/${data?._id}`}>
-      <button className="btn bg-purple-500 text-white">  Expense History <Icon icon="ic:baseline-history" /></button>
+      <button className="btn bg-purple-500 text-white p-2">  Expense History <Icon icon="ic:baseline-history" /></button>
       </Link>
          
         
@@ -115,7 +122,7 @@ const SingleTourData = () => {
 
       <div className="grid grid-cols-3 gap-3">
         {data?.members?.map((m) => (
-          <MembersCard key={m._id} member={m} perHeadCost={perHeadCost} />
+          <MembersCard key={m._id} member={m} tourId={data?._id} members={data?.members}  totalInitail={totalInitail}/>
         ))}
       </div>
 

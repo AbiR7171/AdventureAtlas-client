@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate, } from "react-router-dom";
 
 
 const PrivateRoute = ({children}) => {
@@ -8,11 +9,15 @@ const PrivateRoute = ({children}) => {
     const loginKey = localStorage.getItem("adventure-atlas");
     console.log(loginKey);
     
-    if(loginKey){
-        return children
-    }
+  useEffect(()=>{
+    if(!loginKey){
         return  navigate("/")
+    }
+
+    return children
+       
     
+  },[loginKey])
   
 
 };

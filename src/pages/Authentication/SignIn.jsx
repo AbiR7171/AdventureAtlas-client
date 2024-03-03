@@ -6,6 +6,8 @@ import cn from "../../utils/cn";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
+import {motion} from "framer-motion"
+
 
 
 
@@ -25,6 +27,33 @@ const SignIn = () => {
 
   
   const isFormEmpty = !id || !password;
+
+
+  const intro = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        staggerChildren: 0.25,
+        delayChildren: 0.5,
+      },
+    },
+  };
+  
+  const introChildren = {
+    hidden: { opacity: 0, y: 100 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.7, type: 'spring', bounce: 0.5 },
+    },
+  };
+
+  
+  
+
+
  
 
 
@@ -109,17 +138,21 @@ const SignIn = () => {
         "flex flex-col  justify-center items-center bg-white  bg-opacity-80 h-screen  w-full mx-auto "
       )}
     >
-      <Logo className="text-4xl " color={true} />
+    
+            <Logo className="text-4xl " color={true} />
+  
+
+
       <div className="mt-10 grid lg:grid-cols-12 place-content-center grid-cols-1 w-full max-w-7xl mx-auto p-2">
-        <div   className=" w-full max-w-xl p-3 rounded lg:col-span-6 main-font space-y-5">
-          <h1 className="text-black font-bold text-2xl mt-10 mb-2 text-center">
+        <motion.div   className=" w-full max-w-xl p-3 rounded lg:col-span-6 main-font space-y-5" variants={intro} initial="hidden" animate="visible">
+          <motion.h1 variants={introChildren} className="text-black font-bold text-2xl mt-10 mb-2 text-center">
             Login
-          </h1>
-          <p className="text-black mb-3 text-center">
+          </motion.h1>
+          <motion.p variants={introChildren} className="text-black mb-3 text-center">
             Login to access your Golobe account
-          </p>
+          </motion.p>
           <form  onSubmit={handleSubmit(onsubmit)}>
-            <div className="mb-4">
+            <motion.div variants={introChildren} className="mb-4">
               <label htmlFor="username" className="block text-gray-700">
                 Username or Email
               </label>
@@ -133,9 +166,9 @@ const SignIn = () => {
                 
                 {...register("id", { required: true })}
               />
-            </div>
+            </motion.div>
 
-            <div className="mb-4">
+            <motion.div variants={introChildren} className="mb-4">
               <label htmlFor="password" className="block text-gray-700">
                 Password:
               </label>
@@ -148,32 +181,32 @@ const SignIn = () => {
                 className="input-border mt-1 p-2 block w-full rounded"
                 {...register("password", { required: true })}
               />
-            </div>
+            </motion.div>
 
         
           {/* <Button type="submit">Login</Button> */}
 
 
-          <button type="submit" disabled={isFormEmpty}  className={cn("w-full bg-[#BE31D3]  py-3 text-white", 
+          <motion.button variants={introChildren} type="submit" disabled={isFormEmpty}  className={cn("w-full bg-[#BE31D3]  py-3 text-white", 
           {
-            "bg-opacity-10":isFormEmpty
-          })}>Submit</button>
+            "bg-opacity-40":isFormEmpty
+          })}>Submit</motion.button>
           
        
           </form>
-          <div className="flex justify-center mb-2 mt-4">
+          <motion.div variants={introChildren} className="flex justify-center mb-2 mt-4">
             <p>
               New at Adevnture Atlas? please{" "}
               <Link className="text-blue-800" to="/signUp">
                 SignUp
               </Link>
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <div className="lg:col-span-5">
+        <motion.div variants={introChildren} className="lg:col-span-5">
           <AuthSwiper />
-        </div>
+        </motion.div>
       </div>
     </div>
   );

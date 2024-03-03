@@ -44,6 +44,8 @@ const Modal = ({ data, openModal, setOpenModal }) => {
         if (res.data.success === true) {
           reset();
           refetch();
+
+          location.reload();
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -169,7 +171,6 @@ const Modal = ({ data, openModal, setOpenModal }) => {
           </form>
         </div>
       </div>
-   
     </div>
   );
 };

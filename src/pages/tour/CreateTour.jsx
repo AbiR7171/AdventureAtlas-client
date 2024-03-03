@@ -42,6 +42,7 @@ const CreateTour = () => {
       )
       .then((res) => {
         console.log(res);
+        reset();
         if (res.data.success === true) {
           axios
             .put(
@@ -56,7 +57,7 @@ const CreateTour = () => {
             .then((res) => {
               console.log(res);
             });
-          reset();
+       
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",

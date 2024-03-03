@@ -63,8 +63,9 @@ const DynamicInput = () => {
            })
            .then(res =>{
                   console.log(res)
-  
+                 
                   if(res.data.success === true){
+                    location.reload()
                     const Toast = Swal.mixin({
                       toast: true,
                       position: "top-end",
@@ -106,6 +107,7 @@ const DynamicInput = () => {
                   console.log(res)
   
                   if(res.data.success === true){
+                    location.reload()
                     const Toast = Swal.mixin({
                       toast: true,
                       position: "top-end",
